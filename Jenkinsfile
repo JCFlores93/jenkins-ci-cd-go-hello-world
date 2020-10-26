@@ -43,9 +43,6 @@ pipeline {
         failure {
             echo "====++++failure++++===="
         }
-        success {
-            echo "====++++success++++===="
-        }
         unstable {
             echo "====++++unstable++++===="
         }
