@@ -1,38 +1,15 @@
 pipeline{
     agent any
     stages{
-        stage("Non-Sequential Stage"){
+        stage("Script step"){
             steps{
-                echo "On Non-Sequential Stage"
+                script {
+                    def browsers = ["chrome", "firefox"]
+                    for (int i =0; i < browsers.size(); i++) {
+                        echo "Testing ${browsers[i]} browser"
+                    }
+                }
             }
-        }
-        stage("Sequential"){
-           stages {
-               stage("In Sequential 1") {
-                   steps {
-                       echo "In Sequential 1"
-                   }
-               }
-               stage("In Sequential 2") {
-                   steps {
-                       echo "In Sequential 2"
-                   }
-               }
-               stage("Parallel In Sequential") {
-                   parallel {
-                       stage("In Parallel 1") {
-                           steps{
-                               echo "In Parallel 1"
-                           }
-                       }
-                       stage("In Parallel 2") {
-                           steps{
-                               echo "In Parallel 2"
-                           }
-                       }
-                   }
-               }
-           } 
         }
     }
 }
