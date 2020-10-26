@@ -1,78 +1,38 @@
-pipeline {
+pipeline{
     agent any
-    environment {
-        jenkins = "jenkins outside"
-    }
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '3'))
-        disableConcurrentBuilds()
-    }
-    parameters {
-        string(name: "Person", defaultValue: "Jenkins", description: "Set your name")
-    }
-    triggers {
-        // cron
-        // pollSCM
-        // upstream
-        cron ("H/15 * * * *")
-    }
-    // tools {
-    //     // jdk
-    //     // maven
-    //     // gradle
-    //     // nodejs
-    // }
-    stages {
-        stage ("Hello") {
-            when {
-                equals expected: "origin/main", actual: "${env.GIT_BRANCH}"
-                // buildingTag 
-                // changelog
-                // changeSet
-                // envorimnet
-                // equals
-                // expression
-                // not
-                // allOf
-            }
-            input {
-                message "Desplegar a prod"
-                ok "SI, desplegar"
-                submitter "jlrm, clark"
-            }
-            environment {
-                jenkins = "jenkins inside"
-            }
-            steps {
-                echo "Hello"
-                sh "env"
+    stages{
+        stage("Non-Sequential Stage"){
+            steps{
+                echo "On Non-Sequential Stage"
             }
         }
-    }
-    post{
-        always{
-            echo "====++++always++++===="
-        }
-        success{
-            echo "====++++only when successful++++===="
-        }
-        failure{
-            echo "====++++only when failed++++===="
-        }
-        changed {
-           echo "====++++changed++++====" 
-        }
-        fixed {
-            echo "====++++fixed++++===="
-        }
-        regression {
-            echo "====++++regression++++===="
-        }
-        aborted {
-            echo "====++++aborted++++===="
-        }   
-        unstable {
-            echo "====++++unstable++++===="
+        stage("Sequential"){
+           stages {
+               stage("In Sequential 1") {
+                   steps {
+                       echo "In Sequential 1"
+                   }
+               }
+               stage("In Sequential 2") {
+                   steps {
+                       echo "In Sequential 2"
+                   }
+               }
+               stage("Parallel In Sequential") {
+                   parallel {
+                       stage("In Parallel 1") {
+                           steps{
+                               echo "In Parallel 1"
+                           }
+                       }
+                       stage("In Parallel 2") {
+                           steps{
+                               echo "In Parallel 2"
+                           }
+                       }
+                   }
+               }
+           } 
         }
     }
 }
