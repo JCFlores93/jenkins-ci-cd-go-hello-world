@@ -10,6 +10,12 @@ pipeline {
     parameters {
         string(name: "Person", defaultValue: "Jenkins", description: "Set your name")
     }
+    triggers {
+        // cron
+        // pollSCM
+        // upstream
+        cron { "H/15 * * * *"}
+    }
     stages {
         stage ("Hello") {
             environment {
