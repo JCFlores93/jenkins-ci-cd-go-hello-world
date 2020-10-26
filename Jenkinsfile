@@ -24,6 +24,17 @@ pipeline {
     // }
     stages {
         stage ("Hello") {
+            when {
+                equals expected: "origin/main", actual: "${env.GIT_BRANCH}"
+                // buildingTag 
+                // changelog
+                // changeSet
+                // envorimnet
+                // equals
+                // expression
+                // not
+                // allOf
+            }
             input {
                 message "Desplegar a prod"
                 ok "SI, desplegar"
