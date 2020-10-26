@@ -16,8 +16,19 @@ pipeline {
         // upstream
         cron { "H/15 * * * *"}
     }
+    // tools {
+    //     // jdk
+    //     // maven
+    //     // gradle
+    //     // nodejs
+    // }
     stages {
         stage ("Hello") {
+            input {
+                message "Desplegar a prod"
+                ok "SI, desplegar"
+                submitter "jlrm, clark"
+            }
             environment {
                 jenkins = "jenkins inside"
             }
