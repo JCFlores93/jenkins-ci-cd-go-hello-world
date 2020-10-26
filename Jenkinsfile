@@ -7,6 +7,9 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '3'))
         disableConcurrentBuilds()
     }
+    parameters {
+        string(name: "Person", defaultValue: "Jenkins", description: "Set your name")
+    }
     stages {
         stage ("Hello") {
             environment {
