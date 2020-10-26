@@ -1,0 +1,38 @@
+pipeline{
+    agent any
+    stages{
+        stage("Matrix"){
+            matrix {
+                axes {
+                    axis {
+                        name "Platform"
+                        values "Linux", "MacOS", "Windows"
+                    }
+                }
+                excludes {
+                    axis {
+                        name "Platform"
+                        values "MacOS"
+                    }
+                }
+                stages {
+                    stage("builds") {
+                        steps {
+                            echo "Building"
+                        }
+                    }
+                    stage("test") {
+                        steps {
+                            echo "testing"
+                        }
+                    }
+                    stage("deploy") {
+                        steps {
+                            echo "deploying"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
